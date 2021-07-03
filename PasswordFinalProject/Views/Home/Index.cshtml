@@ -1,0 +1,181 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<script>
+    var passwordList = [];
+    function hasClass(el, className) {
+        if (el.classList) {
+
+            return el.classList.contains(className);
+        }
+        else {
+            new RegExp('(^| )' + className + '( |$)', 'gi').test(el.className);
+        }
+    }
+
+    
+
+
+
+    function SavePass() {
+
+        var helperTextr = {
+            charLength: document.querySelector('.helper-text .length'),
+            lowercase: document.querySelector('.helper-text .lowercase'),
+            uppercase: document.querySelector('.helper-text .uppercase'),
+            special: document.querySelector('.helper-text .special')
+        };
+        if (hasClass(helperTextr.charLength, 'valid') &&
+            hasClass(helperTextr.lowercase, 'valid') &&
+            hasClass(helperTextr.uppercase, 'valid') &&
+            hasClass(helperTextr.special, 'valid')
+        ) {
+            var password = document.querySelector('.password');
+            passwordList = passwordList.length > 10 ? passwordList.splice(passwordList.length - 10, 10) : passwordList;
+
+
+            if (passwordList.includes(password.value))
+                alert("You use this password the last 10 times. Please see the console log to identify in what position it was repeting ");
+            else
+                passwordList.push(password.value);
+            console.log(passwordList);
+
+
+            $.post('/home/save', $('form').serialize(), function () {
+                alert('Posted using jQuery');
+            });
+
+        }
+
+    }
+    document.addEventListener('DOMContentLoaded', function (event) {
+
+        window.onload = function () {
+            var password = document.querySelector('.password');
+
+            var helperText = {
+                charLength: document.querySelector('.helper-text .length'),
+                lowercase: document.querySelector('.helper-text .lowercase'),
+                uppercase: document.querySelector('.helper-text .uppercase'),
+                special: document.querySelector('.helper-text .special')
+            };
+
+            var pattern = {
+                charLength: function () {
+                    if (password.value.length >= 10) {
+                        return true;
+                    }
+                },
+                lowercase: function () {
+                    var regex = /^(?=.*[a-z]).+$/; // Lowercase character pattern
+
+                    if (regex.test(password.value)) {
+                        return true;
+                    }
+                },
+                uppercase: function () {
+                    var regex = /^(?=.*[A-Z]).+$/; // Uppercase character pattern
+
+                    if (regex.test(password.value)) {
+                        return true;
+                    }
+                },
+                special: function () {
+                    var regex = /^(?=.*[0-9_\W]).+$/; // Special character or number pattern
+
+                    if (regex.test(password.value)) {
+                        return true;
+                    }
+                }
+            };
+
+            // Listen for keyup action on password field
+            password.addEventListener('keyup', function () {
+                // Check that password is a minimum of 10 characters
+                patternTest(pattern.charLength(), helperText.charLength);
+
+                // Check that password contains a lowercase letter
+                patternTest(pattern.lowercase(), helperText.lowercase);
+
+                // Check that password contains an uppercase letter
+                patternTest(pattern.uppercase(), helperText.uppercase);
+
+                // Check that password contains a number or special character
+                patternTest(pattern.special(), helperText.special);
+
+                // Check that all requirements are fulfilled
+                if (hasClass(helperText.charLength, 'valid') &&
+                    hasClass(helperText.lowercase, 'valid') &&
+                    hasClass(helperText.uppercase, 'valid') &&
+                    hasClass(helperText.special, 'valid')
+                ) {
+                    addClass(password.parentElement, 'valid');
+                    var btn = document.getElementById("btnSave");
+                    btn.disabled = false;
+                }
+                else {
+                    removeClass(password.parentElement, 'valid');
+                }
+            });
+
+            function patternTest(pattern, response) {
+                if (pattern) {
+                    addClass(response, 'valid');
+                }
+                else {
+                    removeClass(response, 'valid');
+                }
+            }
+
+            function addClass(el, className) {
+                if (el.classList) {
+                    el.classList.add(className);
+                }
+                else {
+                    el.className += ' ' + className;
+                }
+            }
+
+            function removeClass(el, className) {
+                if (el.classList)
+                    el.classList.remove(className);
+                else
+                    el.className = el.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+            }
+
+
+
+        };
+    });
+</script>
+<div class="text-center">
+    
+           
+
+        <form onsubmit="event.preventDefault();">
+
+          
+
+            <label for="USER">User</label>
+            <input type="text" name="UserName" />
+
+
+
+
+            <label for="password">Password</label>
+            <input class="password" name="password" type="password" />
+
+            <ul class="helper-text">
+                <li class="length">Must be at least 10 characters long.</li>
+                <li class="lowercase">Must contain a lowercase letter.</li>
+                <li class="uppercase">Must contain an uppercase letter.</li>
+                <li class="special">Must contain a number or special character.</li>
+            </ul>
+
+
+            <button onclick="SavePass()" disabled id="btnSave">Check Password Validity</button>
+
+        </form>
+      
+   
+</div>
