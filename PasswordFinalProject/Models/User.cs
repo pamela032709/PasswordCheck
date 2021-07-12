@@ -9,6 +9,7 @@ namespace PasswordFinalProject.Models
         public int Id { get; set; }
         
         public string UserName { get; set; }       
+        public string Password { get; set; }
         public virtual ICollection<PasswordHistory> PasswordHistorys { get; set; }
     }
     public class UserViewModel
@@ -16,5 +17,8 @@ namespace PasswordFinalProject.Models
        
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string OldPassword { get; set; }
+        public string Newpassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

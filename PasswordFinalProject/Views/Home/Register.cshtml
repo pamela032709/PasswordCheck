@@ -16,27 +16,26 @@
     <form onsubmit="event.preventDefault();">
 
 
-
         <label for="email">User</label>
-        <input class="email" type="text" id="userName" name="UserName" required onkeyup="OnKeyUpLogin()"/>
+        <input class="email" type="text" name="UserName"  />
         <ul class="helper-text">
             <li class="email">Must be a valid email</li>
 
         </ul>
 
         <label for="password">Password</label>
-        <input class="password" name="password" type="password" required />
+        <input class="password" name="password" type="password" />
 
-        @*<ul class="helper-text">
+        <ul class="helper-text">
             <li class="length">Must be at least 10 characters long.</li>
             <li class="lowercase">Must contain 2 lowercase letter.</li>
             <li class="uppercase">Must contain an uppercase letter.</li>
             <li class="special">Must contain a special character.</li>
-            <li class="digit">Must contain a digit.</li>akumar@nova.edu //ISEC640_ss@
-        </ul> btnLogin*@
+            <li class="digit">Must contain a digit.</li>
+        </ul>
 
-       
-        <button onclick="Login()" id="btnLogin" disable>Login</button>
+        
+        <button onclick="Register()" disabled id="btnSave">Register</button>
 
     </form>
       
