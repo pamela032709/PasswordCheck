@@ -18,7 +18,7 @@
 
 
         <label for="email">User</label>
-        <input class="email" type="text" id="userName" name="UserName" required onkeyup="OnKeyUpLogin()"/>
+        <input class="email" type="text" id="userName" name="UserName" required onkeyup="OnKeyUpLogin()" />
         <ul class="helper-text">
             <li class="email">Must be a valid email</li>
 
@@ -26,7 +26,7 @@
 
         <label for="password">Password</label>
         <input class="password" name="password" type="password" required />
-
+        @*TODO add validation to login as well*@
         @*<ul class="helper-text">
             <li class="length">Must be at least 10 characters long.</li>
             <li class="lowercase">Must contain 2 lowercase letter.</li>
@@ -35,7 +35,7 @@
             <li class="digit">Must contain a digit.</li>akumar@nova.edu //ISEC640_ss@
         </ul> btnLogin*@
 
-       
+
         <button onclick="Login()" id="btnLogin" disable>Login</button>
 
     </form>

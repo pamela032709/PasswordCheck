@@ -117,6 +117,7 @@ namespace PasswordFinalProject.Controllers
                 }
                 catch (Exception e)
                 {
+                //todo add an alert when the user does not exist and redirect to the registration page . 
                     return e.Message;
                 }
 
